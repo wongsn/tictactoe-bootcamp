@@ -1,8 +1,5 @@
 // To-Do List:
-// 1. Create a status window to capture user behaviour
-// 2. Win/Loss Logic
-// checkWin = (currentPlayer)=> { if same column, same row or diagonal, change winner = player}
-// check only after turn 3;
+
 // same column = board[0][x], board[1][x], board[2][x]
 // same row = board[x][0], board[x][1], board[x][2]
 // diagonal = either board [0][0], board[1][1], board[2][2]
@@ -28,7 +25,8 @@ const hasStarted = false;
 
 // current player global starts at X
 let currentPlayer = 'X';
-const turnNumber = 1;
+let currentTurn = 0;
+let winner;
 
 // completely rebuilds the entire board every time there's a click
 const buildBoard = (board) => {
@@ -76,13 +74,111 @@ const togglePlayer = () => {
   }
 };
 
-const squareClick = (column, row) => {
-  console.log('coordinates', column, row);
+const squareClick = (row, column) => {
+  console.log('coordinates', row, column);
+  console.log(currentPlayer);
+
+  const checkWin = () => {
+    console.log('checking...');
+    let counter = 0;
+    // check horizontals
+    // same row = board[x][0], board[x][1], board[x][2]
+    for (let i = 0; i < 3; i += 1) {
+      counter = 0;
+      for (let j = 0; j < 3; j += 1) {
+        if (board[i][j] == currentPlayer) {
+          counter += 1;
+          console.log(counter);
+        }
+        console.log(counter);
+      }
+
+      if (counter == 3) {
+        dataField.innerHTML = `${currentPlayer} wins horizontally in ${currentTurn} rounds!`;
+        // reset global counters
+      } else {
+        console.log(counter);
+        console.log('no horizontals');
+      }
+    }
+
+    // check vertical
+    // same column = board[0][x], board[1][x], board[2][x]
+    for (let i = 0; i < 3; i += 1) {
+      counter = 0;
+      for (let j = 0; j < 3; j += 1) {
+        if (board[j][i] == currentPlayer) {
+          counter += 1;
+          console.log(counter);
+        }
+        console.log(counter);
+      }
+
+      if (counter == 3) {
+        dataField.innerHTML = `${currentPlayer} wins vertically in ${currentTurn} rounds!`;
+        // reset global counters
+      } else {
+        console.log(counter);
+        console.log('no verticals');
+      }
+    }
+
+    // check diagonals
+    // diagonal = either board [0][0], board[1][1], board[2][2]
+    counter = 0;
+    for (let i = 0; i < 3; i += 1) {
+      for (let j = 0; j < 3; j += 1) {
+        if (i == j && board[i][j] == currentPlayer) {
+          counter += 1;
+          console.log(counter);
+        } else if (Math.abs(j - i) >= 1) {
+          continue;
+        }
+        console.log(counter);
+      }
+
+      if (counter == 3) {
+        dataField.innerHTML = `${currentPlayer} wins left diagonally in ${currentTurn} rounds!`;
+        // reset global counters
+      } else {
+        console.log(counter);
+        console.log('no left diagonal');
+      }
+    }
+
+    // check diagonals
+    // diagonal = board[0][2],board[1][1], board[2][0]
+    counter = 0;
+    for (let i = 0; i < 3; i += 1) {
+      for (let j = 0; j < 3; j += 1) {
+        if (((Math.abs(j - i) == 2) || (i == 1 && j == 1)) && board[i][j] == currentPlayer) {
+          counter += 1;
+          console.log(counter);
+        } else {
+          continue;
+        }
+        console.log(counter);
+      }
+
+      if (counter == 3) {
+        dataField.innerHTML = `${currentPlayer} wins right diagonally in ${currentTurn} rounds!`;
+        // reset global counters
+      } else {
+        console.log(counter);
+        console.log('no right diagonal');
+      }
+    }
+  };
 
   // see if the clicked square has been clicked on before
-  if (board[column][row] === '') {
+  if (board[row][column] === '') {
     // alter the data array, set it to the current player
-    board[column][row] = currentPlayer;
+    board[row][column] = currentPlayer;
+    currentTurn += 1;
+    console.log(currentTurn);
+    if (currentTurn >= 5) {
+      checkWin();
+    }
 
     // refresh the creen with a new board
     // according to the array that was just changed
@@ -90,6 +186,8 @@ const squareClick = (column, row) => {
 
     // change the player
     togglePlayer();
+  } else {
+    dataField.innerHTML = 'Click on another square';
   }
 };
 
