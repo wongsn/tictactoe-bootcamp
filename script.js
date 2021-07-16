@@ -17,22 +17,23 @@ const board = [
   ['', '', ''],
 ];
 
-// the element that contains the rows and squares
-let boardElement;
-
 // the element that contains the entire board
 // we can empty it out for convenience
 let boardContainer;
+let dataField;
+let utilButton;
+
+// boolean toggles
+const hasStarted = false;
 
 // current player global starts at X
 let currentPlayer = 'X';
+const turnNumber = 1;
 
 // completely rebuilds the entire board every time there's a click
 const buildBoard = (board) => {
   // start with an empty container
   boardContainer.innerHTML = '';
-  boardElement = document.createElement('div');
-  boardElement.classList.add('board');
 
   // move through the board data array and create the
   // current state of the board
@@ -94,7 +95,18 @@ const squareClick = (column, row) => {
 
 const initGame = () => {
   boardContainer = document.createElement('div');
+  boardContainer.classList.add('board');
   document.body.appendChild(boardContainer);
+
+  dataField = document.createElement('div');
+  dataField.classList.add('data');
+  dataField.innerHTML = 'hello!';
+  document.body.appendChild(dataField);
+
+  utilButton = document.createElement('button');
+  utilButton.classList.add('button');
+  utilButton.innerHTML = 'start';
+  document.body.appendChild(utilButton);
 
   // build the board - right now it's empty
   buildBoard(board);
