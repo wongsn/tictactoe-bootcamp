@@ -8,16 +8,75 @@ body {
 
 .square {
   padding: 10px;
-  margin: 10px;
-  background-color: white;
+  margin: 0px;
+  background-color: transparent;
   display: inline-block;
   height: 40px;
   width: 40px;
   vertical-align: top;
   text-align: center;
+  border-style: solid;
+  border-color: black;
 }
 
 .data {
   background-color: rgba(0, 0, 0, 0.2);
   height: 5000x;
+}
+
+.square-topleft {
+  border-style: none solid solid none;
+}
+.square-topright {
+  border-style: none none solid solid;
+}
+.square-btmleft {
+  border-style: solid solid none none;
+}
+.square-btmright {
+  border-style: solid none none solid;
+}
+
+.square-diagonal-btmtotop {
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent 0%,
+    transparent 48%,
+    black 50%,
+    transparent 52%,
+    transparent 100%
+  );
+}
+
+.square-diagonal-btmtotop {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent 0%,
+    transparent 48%,
+    black 50%,
+    transparent 52%,
+    transparent 100%
+  );
+}
+
+.square-column {
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 46%,
+    black 50%,
+    transparent 54%,
+    transparent 100%
+  );
+}
+
+.square-row {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0%,
+    transparent 46%,
+    black 50%,
+    transparent 54%,
+    transparent 100%
+  );
 }
