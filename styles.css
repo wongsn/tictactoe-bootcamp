@@ -8,15 +8,21 @@ body {
 
 .square {
   padding: 10px;
-  margin: 0px;
+  margin: 0;
   background-color: transparent;
   display: inline-block;
   height: 40px;
   width: 40px;
   vertical-align: top;
   text-align: center;
+  line-height: 40px;
   border-style: solid;
   border-color: black;
+  border-radius: 8px;
+}
+
+.square:hover {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .data {
@@ -24,20 +30,7 @@ body {
   height: 5000x;
 }
 
-.square-topleft {
-  border-style: none solid solid none;
-}
-.square-topright {
-  border-style: none none solid solid;
-}
-.square-btmleft {
-  border-style: solid solid none none;
-}
-.square-btmright {
-  border-style: solid none none solid;
-}
-
-.square-diagonal-btmtotop {
+.square-updiagonal {
   background-image: repeating-linear-gradient(
     135deg,
     transparent 0%,
@@ -48,7 +41,7 @@ body {
   );
 }
 
-.square-diagonal-btmtotop {
+.square-downdiagonal {
   background-image: repeating-linear-gradient(
     45deg,
     transparent 0%,
