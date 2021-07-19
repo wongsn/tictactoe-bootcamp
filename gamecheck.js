@@ -5,8 +5,13 @@ const checkRow = (row) => {
   for (let j = 0; j < boardSize; j += 1) {
     if (board[row][j] == currentPlayer) {
       consecutiveRow += 1;
+      console.log('added');
+    } else if (consecutiveRow !== winCondition && board[row][j] !== currentPlayer) {
+      consecutiveRow = 0;
+      console.log('reset');
     }
   }
+
   if (consecutiveRow == winCondition) {
     return true;
   }
@@ -18,9 +23,10 @@ const checkCol = (column) => {
   for (let i = 0; i < boardSize; i += 1) {
     if (board[i][column] == currentPlayer) {
       consecutiveCol += 1;
+    } else {
+      consecutiveCol = 0;
     }
   }
-
   if (consecutiveCol == winCondition) {
     return true;
   }
@@ -36,12 +42,13 @@ const checkDownDiag = (row, column) => {
     for (let j = 0; j < boardSize; j += 1) {
       if (i == j && board[i][j] == currentPlayer) {
         consecutiveDownDiag += 1;
+      } if (i == j && board[i][j] != currentPlayer) {
+        consecutiveDownDiag = 0;
       } else {
         continue;
       }
     }
   }
-
   if (consecutiveDownDiag == winCondition) {
     return true;
   }
@@ -54,25 +61,26 @@ const checkUpDiag = (row, column) => {
   for (let i = 0; i < boardSize; i += 1) {
     // if boardSize is even
     if (boardSize % 2 == 0) {
-      console.log('even');
       for (let j = 0; j < boardSize; j += 1) {
         if (j != boardSize - 1 - i) { continue; }
         else if ((Math.abs(j - i)) % 2 == 1 && board[i][j] == currentPlayer) {
           consecutiveUpDiag += 1;
+        } else {
+          consecutiveUpDiag = 0;
         }
       }
     } else {
       // if boardSize is odd
-      console.log('odd');
       for (let j = 0; j < boardSize; j += 1) {
         if (j != boardSize - 1 - i) { continue; }
         else if ((Math.abs(j - i) % 2 == 0) && board[i][j] == currentPlayer) {
           consecutiveUpDiag += 1;
+        } else {
+          consecutiveUpDiag = 0;
         }
       }
     }
   }
-
   if (consecutiveUpDiag == winCondition) {
     return true;
   }
@@ -80,11 +88,11 @@ const checkUpDiag = (row, column) => {
 };
 
 const amendSquares = (type, row, column) => {
+  console.log('Amending squares...');
   if (type == 'col') {
     for (let i = 0; i < boardSize; i += 1) {
       if (board[i][column] == currentPlayer) {
         document.getElementById(`row${i}-col${column}`).classList.add('square-column');
-        console.log('col');
       }
     }
   } else if (type == 'row') {
@@ -108,21 +116,22 @@ const amendSquares = (type, row, column) => {
       // if boardSize is odd
         console.log('odd');
         for (let j = 0; j < boardSize; j += 1) {
-          if (j != boardSize - 1 - i) { continue; }
+          if (j !== boardSize - 1 - i) { continue; }
           else if ((Math.abs(j - i) % 2 == 0) && board[i][j] == currentPlayer) {
             document.getElementById(`row${i}-col${j}`).classList.add('square-updiagonal');
           }
         }
       }
     }
-  } else if (type == 'downdiag') { for (let i = 0; i < boardSize; i += 1) {
-    for (let j = 0; j < boardSize; j += 1) {
-      if (i == j && board[i][j] == currentPlayer) {
-        document.getElementById(`row${i}-col${j}`).classList.add('square-downdiagonal');
-      } else {
-        continue;
+  } else if (type == 'downdiag') {
+    for (let i = 0; i < boardSize; i += 1) {
+      for (let j = 0; j < boardSize; j += 1) {
+        if (i == j && board[i][j] == currentPlayer) {
+          document.getElementById(`row${i}-col${j}`).classList.add('square-downdiagonal');
+        } else {
+          continue;
+        }
       }
     }
-  }
   }
 };
