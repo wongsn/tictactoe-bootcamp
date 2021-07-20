@@ -18,6 +18,8 @@ let currentTurn = 0;
 let logXwins = 0;
 let logOwins = 0;
 
+let AIdifficulty = 'player2';
+
 // completely rebuilds the entire board every time there's a click
 const buildBoard = (board) => {
   // start with an empty container
@@ -60,6 +62,10 @@ const buildBoard = (board) => {
 
 // switch the global values from one player to the next
 const togglePlayer = () => {
+  consecutiveRow = 0;
+  consecutiveCol = 0;
+  consecutiveDownDiag = 0;
+  consecutiveUpDiag = 0;
   if (currentPlayer === 'X') {
     currentPlayer = 'O';
     console.log('current player is O');
@@ -79,11 +85,6 @@ const initGame = () => {
   dataField.innerHTML = 'hello!';
   document.body.appendChild(dataField);
 
-  utilButton = document.createElement('button');
-  utilButton.classList.add('button');
-  utilButton.innerHTML = 'start';
-  document.body.appendChild(utilButton);
-
   const inputBoardSize = document.createElement('input');
   inputBoardSize.classList.add('input');
   inputBoardSize.placeholder = 'Input boardsize';
@@ -97,22 +98,39 @@ const initGame = () => {
   const aiOptions = document.createElement('select');
   aiOptions.classList.add('select');
 
+  const player2 = document.createElement('option');
+  player2.text = 'Two Player Mode';
+  player2.value = 'player2';
   const easyAI = document.createElement('option');
-  easyAI.text = 'Easy';
+  easyAI.text = 'Easy Bot';
+  easyAI.value = 'easy';
   const medAI = document.createElement('option');
-  medAI.text = 'Medium';
+  medAI.text = 'Medium Bot';
+  medAI.value = 'medium';
   const hardAI = document.createElement('option');
-  hardAI.text = 'Hard';
-  aiOptions.append(easyAI, medAI, hardAI);
+  hardAI.text = 'Hard Bot';
+  hardAI.value = 'hard';
+  aiOptions.append(player2, easyAI, medAI, hardAI);
   document.body.appendChild(aiOptions);
 
+  utilButton = document.createElement('button');
+  utilButton.classList.add('button');
+  utilButton.innerHTML = 'start';
+  document.body.appendChild(utilButton);
+
   utilButton.addEventListener('click', () => {
+    board = [];
+    currentPlayer = 'X';
+    currentTurn = 0;
+    canClick = true;
+
     boardSize = inputBoardSize.value > 3 ? inputBoardSize.value : 3;
     if (inputWinCondition.value > inputBoardSize.value) {
       winCondition = inputBoardSize.value;
     } else if (inputWinCondition.value > 0) {
       winCondition = inputWinCondition.value;
     }
+    AIdifficulty = aiOptions.value;
     console.log(boardSize, winCondition);
     // build the board - right now it's empty
     buildBoard(board);

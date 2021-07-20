@@ -1,8 +1,22 @@
+const nextPlayer = () => {
+  if (AIdifficulty == 'player2') {
+
+  } else if (AIdifficulty == 'easy') {
+    easyComp();
+  } else if (AIdifficulty == 'medium') {
+    easyComp();
+  } else if (AIdifficulty == 'hard') {
+    easyComp();
+  }
+};
+
 const endGame = (winner) => {
   if (winner == 'X') {
     logXwins += 1;
-  } else {
+  } else if (winner == 'O') {
     logOwins += 1;
+  } else if (winner == 'none') {
+
   }
 
   currentPlayer = 'X';
@@ -62,6 +76,6 @@ const squareClick = (row, column) => {
 
     // change the player
     togglePlayer();
-    setTimeout(() => { easyComp(); }, 500);
+    setTimeout(() => { nextPlayer(); }, 500);
   }
 };
