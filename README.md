@@ -1,10 +1,10 @@
-# Rocket Academy Coding Bootcamp: Tic Tac Toe
+# Tic Tac Toe
 
 ## Base
 ### Check Win
 Add a checkWin function when the player clicks a square. When the game is won, display the winner on the screen and reset the game.
 
-```json
+```js
 const checkWin = (board) => {
   // check every position
   // there is a conditional for all 15 win conditions
